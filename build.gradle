@@ -1,0 +1,79 @@
+buildscript {
+    repositories {
+        maven { url = 'https://maven.minecraftforge.net' }
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+    }
+}
+
+apply plugin: 'net.minecraftforge.gradle'
+
+group = 'com.collarmc.example'
+version = '1.0-SNAPSHOT'
+
+java {
+    archivesBaseName = 'forge-mod'
+    toolchain.languageVersion = JavaLanguageVersion.of(8)
+}
+
+minecraft {
+    mappings channel: 'stable', version: '39-1.12'
+    runs {
+        client {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            mods {
+                collarexampleforgemod {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            mods {
+                collarexampleforgemod {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+repositories {
+    mavenLocal() // if building collar from source
+    mavenCentral()
+    maven { // collar maven repository
+        name = 'Collar'
+        url = 'https://raw.githubusercontent.com/collarmc/maven/main/'
+    }
+}
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2855'
+    implementation group: 'com.collarmc', name: 'client', version: '0.1.0-SNAPSHOT', ext: 'jar', classifier: 'full'
+    implementation group: 'com.collarmc', name: 'plugin', version: '0.1.0-SNAPSHOT', ext: 'jar'
+}
+
+jar {
+    manifest {
+        attributes([
+                "Specification-Title"     : "collarexampleforgemod",
+                //"Specification-Vendor": "collarexampleforgemod authors",
+                "Specification-Version"   : "1", // We are version 1 of ourselves
+                "Implementation-Title"    : project.name,
+                "Implementation-Version"  : project.jar.archiveVersion,
+                //"Implementation-Vendor": "collarexampleforgemod authors",
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
+}
+
+jar.finalizedBy('reobfJar')
