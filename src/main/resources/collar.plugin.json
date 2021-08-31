@@ -1,5 +1,5 @@
 {
-  "id": "collar-fabricmod-example",
+  "id": "collar-forgemod-example",
   "entrypoints": {
     "ExampleCollarPlugin": "com.collarmc.example.forgemod.ExampleCollarPlugin"
   }
