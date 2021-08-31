@@ -59,7 +59,6 @@ repositories {
 dependencies {
     minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2855'
     implementation group: 'com.collarmc', name: 'client', version: '0.1.0-SNAPSHOT', ext: 'jar', classifier: 'full'
-    implementation group: 'com.collarmc', name: 'plugin', version: '0.1.0-SNAPSHOT', ext: 'jar'
 }
 
 jar {
